@@ -4,7 +4,7 @@ version: 0.0.1
 authors:
 - huclengyue <lengyue@apkdv.com>
 - mrtanis <mrtanis1992@hotmail.com>
-homepage: https://github.com/flutter/flutter/
+homepage: https://github.com/huclengyue/FlutterToast
 
 environment:
   sdk: ">=2.0.0-dev.68.0 <3.0.0"
