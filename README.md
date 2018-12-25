@@ -13,7 +13,7 @@ A Flutter Toast plugin.
 
 ```yaml
 # add this line to your dependencies
-toast: ^0.0.5
+toast: ^0.0.6
 ```
 
 ```dart
@@ -29,7 +29,6 @@ property | description
 msg | String (Not Null)(required)
 duration| Toast.LENGTH_SHORT or Toast.LENGTH_LONG (optional)
 gravity | Toast.TOP (or) Toast.CENTER (or) Toast.BOTTOM
-timeInSecForIos | int (only for ios)
 
 
 ![toast](https://github.com/huclengyue/FlutterToast/blob/master/screenshot/141107.png)
