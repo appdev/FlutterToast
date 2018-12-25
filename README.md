@@ -35,8 +35,6 @@ timeInSecForIos | int (only for ios)
 ![toast](https://github.com/huclengyue/FlutterToast/blob/master/screenshot/141107.png)
 ![toast](https://github.com/huclengyue/FlutterToast/blob/master/screenshot/141134.png)
 
-## License
-
 
 ## License
 
