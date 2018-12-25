@@ -3,8 +3,11 @@
 A Flutter Toast plugin.
 
 > Supported  Platforms
-> * Android
+> * Android 
+> fix BadTokenException and no notification permission required
 > * IOS
+> use https://github.com/scalessec/Toast-Swift
+
 
 ## How to Use
 
@@ -29,5 +32,4 @@ gravity | Toast.TOP (or) Toast.CENTER (or) Toast.BOTTOM
 timeInSecForIos | int (only for ios)
 
 
-<img src="screenshot/141107.png" width="320px" />
-<img src="screenshot/141134.png" width="320px" />
+<img src="screenshot/141107.png" width="320px" /> <img src="screenshot/141134.png" width="320px" />
