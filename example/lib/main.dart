@@ -1,14 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(new MyApp());
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+      title: 'Flutter Demo',
+      theme: new ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: new MyHomePage(title: 'Flutter Demo Home Page'),
+    );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
+  final String title;
+
+  @override
+  _MyAppState createState() => new _MyAppState();
+}
+
+class _MyAppState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -57,6 +73,6 @@ class _MyAppState extends State<MyApp> {
   }
 
   void showToast(String msg, {int duration, int gravity}) {
-    Toast.show(msg, duration: duration, gravity: gravity);
+    Toast.show(msg, context, duration: duration, gravity: gravity);
   }
 }
