@@ -2,13 +2,6 @@
 
 A Flutter Toast plugin.
 
-> Supported  Platforms
-> * Android 
-> fix BadTokenException and no notification permission required
-> * IOS
-> use https://github.com/scalessec/Toast-Swift
-
-
 ## How to Use
 
 ```yaml
