@@ -6,7 +6,7 @@ A Flutter Toast plugin.
 
 ```yaml
 # add this line to your dependencies
-toast: ^0.0.8
+toast: ^0.0.9
 ```
 
 ```dart
