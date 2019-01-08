@@ -12,32 +12,16 @@ import io.flutter.plugin.common.PluginRegistry.Registrar
 
 class ToastPlugin(val context: Context) : MethodCallHandler {
     companion object {
-        const val CHANNEL = "UtilGroup/Toast"
-        const val ShowToast = "showToast"
+
         @JvmStatic
         fun registerWith(registrar: Registrar) {
-            val channel = MethodChannel(registrar.messenger(), CHANNEL)
+            val channel = MethodChannel(registrar.messenger(), "")
             channel.setMethodCallHandler(ToastPlugin(registrar.activeContext()))
         }
     }
 
     override fun onMethodCall(call: MethodCall, result: Result) {
-        if (call.method == ShowToast) {
-            val msg = call.argument<String>("msg")
-            val duration = call.argument<Int>("duration")
-            val gravity = call.argument<Int>("gravity")
-            msg?.let {
-                ToastUtil.makeText(context, it,
-                        if (duration == 1) Toast.LENGTH_SHORT else Toast.LENGTH_LONG,
-                        when (gravity) {
-                            0 -> Gravity.BOTTOM
-                            1 -> Gravity.CENTER
-                            else -> Gravity.TOP
-                        }).show()
-            }
-            result.success("Toast Success")
-        } else {
             result.notImplemented()
-        }
+
     }
 }

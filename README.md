@@ -20,8 +20,12 @@ Toast.show("Toast plugin app", duration: Toast.LENGTH_SHORT, gravity:  Toast.BOT
 property | description
 --------|------------
 msg | String (Not Null)(required)
+context | BuildContext (Not Null)(required)
 duration| Toast.LENGTH_SHORT or Toast.LENGTH_LONG (optional)
 gravity | Toast.TOP (or) Toast.CENTER (or) Toast.BOTTOM
+textColor | Color (default white)
+backgroundColor | Color (default Color(0xAA000000))
+backgroundRadius | double （default 16)
 
 
 ![toast](https://github.com/huclengyue/FlutterToast/blob/master/screenshot/141107.png)

@@ -7,27 +7,36 @@ class Toast {
   static final int BOTTOM = 0;
   static final int CENTER = 1;
   static final int TOP = 2;
-  static bool _isVisible = false;
+  static ToastView _toastView;
 
-  static void show(
-    String msg,
-    BuildContext context, {
-    int duration = 1,
-    int gravity = 0,
-  }) async {
-    if (_isVisible) {
-      return;
-    }
-    final ThemeData theme = Theme.of(context);
-    final ThemeData darkTheme = ThemeData(
-      brightness: Brightness.dark,
-      textTheme: theme.brightness == Brightness.dark ? theme.textTheme : theme.primaryTextTheme,
-      platform: theme.platform,
-    );
-    _isVisible = true;
-    OverlayState overlayState = Overlay.of(context);
-    OverlayEntry overlayEntry = new OverlayEntry(
-      builder: (BuildContext context) => BlinkingToastWidget(
+  static void show(String msg, BuildContext context,
+      {int duration = 1,
+      int gravity = 0,
+      Color backgroundColor = const Color(0xAA000000),
+      Color textColor = Colors.white,
+      double backgroundRadius = 20}) {
+    _toastView?.dismiss();
+    _toastView = null;
+    _toastView = new ToastView(
+        msg, context, duration, gravity, backgroundColor, textColor, backgroundRadius);
+  }
+}
+
+class ToastView {
+  bool _isVisible = false;
+  OverlayState overlayState;
+  OverlayEntry overlayEntry;
+
+  ToastView(String msg, BuildContext context, int duration, int gravity, Color background,
+      Color textColor, double backgroundRadius) {
+    createView(msg, context, duration, gravity, background, textColor, backgroundRadius);
+  }
+
+  void createView(String msg, BuildContext context, int duration, int gravity, Color background,
+      Color textColor, double backgroundRadius) async {
+    overlayState = Overlay.of(context);
+    overlayEntry = new OverlayEntry(
+      builder: (BuildContext context) => ToastWidget(
           widget: Container(
             width: MediaQuery.of(context).size.width,
             child: FittedBox(
@@ -37,28 +46,37 @@ class Toast {
                   constraints: BoxConstraints(minHeight: 32),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Color(0XCC000000),
-                      borderRadius: BorderRadius.circular(20),
+                      color: background,
+                      borderRadius: BorderRadius.circular(backgroundRadius),
                     ),
                     margin: EdgeInsets.symmetric(horizontal: 20),
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: Center(
-                      child: new Text(msg, softWrap: true, style: darkTheme.textTheme.body1),
+                      child: new Text(msg,
+                          softWrap: true, style: TextStyle(fontSize: 15, color: textColor)),
                     ),
                   ),
                 )),
           ),
-          gravity: gravity == null ? BOTTOM : gravity),
+          gravity: gravity),
     );
     overlayState.insert(overlayEntry);
-    await new Future.delayed(Duration(seconds: duration == null ? LENGTH_SHORT : duration));
-    overlayEntry.remove();
-    _isVisible = false;
+    _isVisible = true;
+    await new Future.delayed(Duration(seconds: duration == null ? Toast.LENGTH_SHORT : duration));
+    this.dismiss();
+  }
+
+  dismiss() async {
+    if (!_isVisible) {
+      return;
+    }
+    this._isVisible = false;
+    overlayEntry?.remove();
   }
 }
 
-class BlinkingToastWidget extends StatefulWidget {
-  BlinkingToastWidget({
+class ToastWidget extends StatelessWidget {
+  ToastWidget({
     Key key,
     @required this.widget,
     @required this.gravity,
@@ -68,34 +86,13 @@ class BlinkingToastWidget extends StatefulWidget {
   final int gravity;
 
   @override
-  _BlinkingToastWidgetState createState() => new _BlinkingToastWidgetState();
-}
-
-class _BlinkingToastWidgetState extends State<BlinkingToastWidget>
-    with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = new AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
-    _controller.forward().orCancel;
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return new Positioned(
-        top: widget.gravity == 2 ? 50 : null,
-        bottom: widget.gravity == 0 ? 50 : null,
-        child: new Container(
+        top: gravity == 2 ? 50 : null,
+        bottom: gravity == 0 ? 50 : null,
+        child: Material(
           color: Colors.transparent,
-          child: widget.widget,
+          child: widget,
         ));
   }
 }

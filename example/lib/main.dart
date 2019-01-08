@@ -73,6 +73,6 @@ class _MyAppState extends State<MyHomePage> {
   }
 
   void showToast(String msg, {int duration, int gravity}) {
-    Toast.show(msg, context, duration: duration, gravity: gravity);
+    Toast.show(msg, context, duration: duration, gravity: gravity, backgroundRadius: 1);
   }
 }
