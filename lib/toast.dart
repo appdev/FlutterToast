@@ -30,13 +30,13 @@ class ToastView {
   ToastView._internal();
 
   static OverlayState overlayState;
-  static OverlayEntry overlayEntry;
+  static OverlayEntry _overlayEntry;
   static bool _isVisible = false;
 
   static void createView(String msg, BuildContext context, int duration, int gravity,
       Color background, Color textColor, double backgroundRadius) async {
     overlayState = Overlay.of(context);
-    overlayEntry = new OverlayEntry(
+    _overlayEntry = new OverlayEntry(
       builder: (BuildContext context) => ToastWidget(
           widget: Container(
             width: MediaQuery.of(context).size.width,
@@ -62,7 +62,7 @@ class ToastView {
           gravity: gravity),
     );
     _isVisible = true;
-    overlayState.insert(overlayEntry);
+    overlayState.insert(_overlayEntry);
     await new Future.delayed(Duration(seconds: duration == null ? Toast.LENGTH_SHORT : duration));
     dismiss();
   }
@@ -72,7 +72,7 @@ class ToastView {
       return;
     }
     _isVisible = false;
-    overlayEntry?.remove();
+    _overlayEntry?.remove();
   }
 }
 
