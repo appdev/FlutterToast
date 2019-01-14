@@ -7,7 +7,6 @@ class Toast {
   static final int BOTTOM = 0;
   static final int CENTER = 1;
   static final int TOP = 2;
-  static ToastView _toastView;
 
   static void show(String msg, BuildContext context,
       {int duration = 1,
@@ -15,25 +14,27 @@ class Toast {
       Color backgroundColor = const Color(0xAA000000),
       Color textColor = Colors.white,
       double backgroundRadius = 20}) {
-    _toastView?.dismiss();
-    _toastView = null;
-    _toastView = new ToastView(
+    ToastView.dismiss();
+    ToastView.createView(
         msg, context, duration, gravity, backgroundColor, textColor, backgroundRadius);
   }
 }
 
 class ToastView {
-  bool _isVisible = false;
-  OverlayState overlayState;
-  OverlayEntry overlayEntry;
+  static final ToastView _singleton = new ToastView._internal();
 
-  ToastView(String msg, BuildContext context, int duration, int gravity, Color background,
-      Color textColor, double backgroundRadius) {
-    createView(msg, context, duration, gravity, background, textColor, backgroundRadius);
+  factory ToastView() {
+    return _singleton;
   }
 
-  void createView(String msg, BuildContext context, int duration, int gravity, Color background,
-      Color textColor, double backgroundRadius) async {
+  ToastView._internal();
+
+  static OverlayState overlayState;
+  static OverlayEntry overlayEntry;
+  static bool _isVisible = false;
+
+  static void createView(String msg, BuildContext context, int duration, int gravity,
+      Color background, Color textColor, double backgroundRadius) async {
     overlayState = Overlay.of(context);
     overlayEntry = new OverlayEntry(
       builder: (BuildContext context) => ToastWidget(
@@ -60,17 +61,17 @@ class ToastView {
           ),
           gravity: gravity),
     );
-    overlayState.insert(overlayEntry);
     _isVisible = true;
+    overlayState.insert(overlayEntry);
     await new Future.delayed(Duration(seconds: duration == null ? Toast.LENGTH_SHORT : duration));
-    this.dismiss();
+    dismiss();
   }
 
-  dismiss() async {
+  static dismiss() async {
     if (!_isVisible) {
       return;
     }
-    this._isVisible = false;
+    _isVisible = false;
     overlayEntry?.remove();
   }
 }

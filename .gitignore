@@ -17,6 +17,16 @@
 idea/
 
 
+android/
+ios/
+example/.metadata
+example/README.md
+example/.idea
+example/.packages
+example/pubspec.lock
+example/pubspec.yaml
+
+
 .DS_Store
 .atom/
 .dart_tool/
