@@ -14,7 +14,7 @@ import 'package:toast/toast.dart';
 ```
 
 ```dart
-Toast.show("Toast plugin app", duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+Toast.show("Toast plugin app", context duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
 ```
 
 property | description
