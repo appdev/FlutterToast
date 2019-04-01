@@ -36,27 +36,28 @@ class ToastView {
   static void createView(String msg, BuildContext context, int duration, int gravity,
       Color background, Color textColor, double backgroundRadius) async {
     overlayState = Overlay.of(context);
+
+    Paint paint = Paint();
+    paint.strokeCap = StrokeCap.square;
+    paint.color = background;
+
     _overlayEntry = new OverlayEntry(
       builder: (BuildContext context) => ToastWidget(
           widget: Container(
             width: MediaQuery.of(context).size.width,
-            child: FittedBox(
+            child: Container(
                 alignment: Alignment.center,
-                fit: BoxFit.none,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: 32),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: background,
-                      borderRadius: BorderRadius.circular(backgroundRadius),
-                    ),
-                    margin: EdgeInsets.symmetric(horizontal: 20),
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Center(
-                      child: new Text(msg,
-                          softWrap: true, style: TextStyle(fontSize: 15, color: textColor)),
-                    ),
+                width: MediaQuery.of(context).size.width,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: background,
+                    borderRadius: BorderRadius.circular(backgroundRadius),
                   ),
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.fromLTRB(16, 10, 16, 10),
+                  child:
+                      Text(msg, softWrap: true, style: TextStyle(fontSize: 15, color: textColor)),
+//                      )
                 )),
           ),
           gravity: gravity),

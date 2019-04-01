@@ -1,3 +1,5 @@
-## 0.0.1
+## 0.1.4
 
-* TODO: Describe initial release.
+* fix https://github.com/huclengyue/FlutterToast/issues/6
+
+
