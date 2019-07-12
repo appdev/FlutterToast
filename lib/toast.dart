@@ -13,10 +13,11 @@ class Toast {
       int gravity = 0,
       Color backgroundColor = const Color(0xAA000000),
       Color textColor = Colors.white,
-      double backgroundRadius = 20}) {
+      double backgroundRadius = 20,
+      Border border}) {
     ToastView.dismiss();
     ToastView.createView(
-        msg, context, duration, gravity, backgroundColor, textColor, backgroundRadius);
+        msg, context, duration, gravity, backgroundColor, textColor, backgroundRadius, border);
   }
 }
 
@@ -34,7 +35,7 @@ class ToastView {
   static bool _isVisible = false;
 
   static void createView(String msg, BuildContext context, int duration, int gravity,
-      Color background, Color textColor, double backgroundRadius) async {
+      Color background, Color textColor, double backgroundRadius, Border border) async {
     overlayState = Overlay.of(context);
 
     Paint paint = Paint();
@@ -52,12 +53,12 @@ class ToastView {
                   decoration: BoxDecoration(
                     color: background,
                     borderRadius: BorderRadius.circular(backgroundRadius),
+                    border: border,
                   ),
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   padding: EdgeInsets.fromLTRB(16, 10, 16, 10),
                   child:
                       Text(msg, softWrap: true, style: TextStyle(fontSize: 15, color: textColor)),
-//                      )
                 )),
           ),
           gravity: gravity),
