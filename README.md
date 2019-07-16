@@ -26,6 +26,7 @@ gravity | Toast.TOP (or) Toast.CENTER (or) Toast.BOTTOM
 textColor | Color (default white)
 backgroundColor | Color (default Color(0xAA000000))
 backgroundRadius | double （default 16)
+border| Border (optional)
 
 
 ![toast](https://github.com/huclengyue/FlutterToast/blob/master/screenshot/141107.png)
