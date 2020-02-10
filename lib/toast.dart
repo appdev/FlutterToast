@@ -98,8 +98,8 @@ class ToastWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Positioned(
-        top: gravity == 2 ? 50 : null,
-        bottom: gravity == 0 ? 50 : null,
+        top: gravity == 2 ? MediaQuery.of(context).viewInsets.top + 50 : null,
+        bottom: gravity == 0 ? MediaQuery.of(context).viewInsets.bottom + 50 : null,
         child: Material(
           color: Colors.transparent,
           child: widget,
