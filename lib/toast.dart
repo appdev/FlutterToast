@@ -14,10 +14,11 @@ class Toast {
       Color backgroundColor = const Color(0xAA000000),
       textStyle = const TextStyle(fontSize: 15, color: Colors.white),
       double backgroundRadius = 20,
+      bool rootNavigator,
       Border border}) {
     ToastView.dismiss();
     ToastView.createView(msg, context, duration, gravity, backgroundColor,
-        textStyle, backgroundRadius, border);
+        textStyle, backgroundRadius, border, rootNavigator);
   }
 }
 
@@ -42,8 +43,9 @@ class ToastView {
       Color background,
       TextStyle textStyle,
       double backgroundRadius,
-      Border border) async {
-    overlayState = Overlay.of(context);
+      Border border,
+      bool rootNavigator) async {
+    overlayState = Overlay.of(context, rootOverlay: rootNavigator??false);
 
     Paint paint = Paint();
     paint.strokeCap = StrokeCap.square;
