@@ -47,10 +47,6 @@ class ToastView {
       bool rootNavigator) async {
     overlayState = Overlay.of(context, rootOverlay: rootNavigator??false);
 
-    Paint paint = Paint();
-    paint.strokeCap = StrokeCap.square;
-    paint.color = background;
-
     _overlayEntry = new OverlayEntry(
       builder: (BuildContext context) => ToastWidget(
           widget: Container(
