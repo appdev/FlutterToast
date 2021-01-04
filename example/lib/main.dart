@@ -17,8 +17,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  MyHomePage({Key? key, this.title}) : super(key: key);
+  final String? title;
 
   @override
   _MyAppState createState() => new _MyAppState();
@@ -74,7 +74,7 @@ class _MyAppState extends State<MyHomePage> {
     );
   }
 
-  void showToast(String msg, {int duration, int gravity}) {
+  void showToast(String msg, {int? duration, int? gravity}) {
     Toast.show(msg, context, duration: duration, gravity: gravity);
   }
 }
