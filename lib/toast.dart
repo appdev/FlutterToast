@@ -9,13 +9,13 @@ class Toast {
   static final int top = 2;
 
   static void show(String msg, BuildContext context,
-      {int duration = 1,
-      int gravity = 0,
+      {int? duration = 1,
+      int? gravity = 0,
       Color backgroundColor = const Color(0xAA000000),
       textStyle = const TextStyle(fontSize: 15, color: Colors.white),
       double backgroundRadius = 20,
-      bool rootNavigator,
-      Border border}) {
+      bool? rootNavigator,
+      Border? border}) {
     ToastView.dismiss();
     ToastView.createView(msg, context, duration, gravity, backgroundColor,
         textStyle, backgroundRadius, border, rootNavigator);
@@ -31,20 +31,20 @@ class ToastView {
 
   ToastView._internal();
 
-  static OverlayState overlayState;
-  static OverlayEntry _overlayEntry;
+  static OverlayState? overlayState;
+  static OverlayEntry? _overlayEntry;
   static bool _isVisible = false;
 
   static void createView(
       String msg,
       BuildContext context,
-      int duration,
-      int gravity,
+      int? duration,
+      int? gravity,
       Color background,
       TextStyle textStyle,
       double backgroundRadius,
-      Border border,
-      bool rootNavigator) async {
+      Border? border,
+      bool? rootNavigator) async {
     overlayState = Overlay.of(context, rootOverlay: rootNavigator??false);
 
     _overlayEntry = new OverlayEntry(
@@ -68,7 +68,7 @@ class ToastView {
           gravity: gravity),
     );
     _isVisible = true;
-    overlayState.insert(_overlayEntry);
+    overlayState!.insert(_overlayEntry!);
     await new Future.delayed(
         Duration(seconds: duration == null ? Toast.lengthShort : duration));
     dismiss();
@@ -85,13 +85,13 @@ class ToastView {
 
 class ToastWidget extends StatelessWidget {
   ToastWidget({
-    Key key,
-    @required this.widget,
-    @required this.gravity,
+    Key? key,
+    required this.widget,
+    required this.gravity,
   }) : super(key: key);
 
   final Widget widget;
-  final int gravity;
+  final int? gravity;
 
   @override
   Widget build(BuildContext context) {

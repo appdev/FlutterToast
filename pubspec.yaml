@@ -1,12 +1,12 @@
 name: toast
 description: A Flutter Toast plugin.
-version: 0.1.4
+version: 0.2.0-nullsafety
 authors:
 - huclengyue <lengyue@apkdv.com>
 homepage: https://github.com/huclengyue/FlutterToast
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: '>=2.12.0-0 <3.0.0'
 
 dependencies:
   flutter:
