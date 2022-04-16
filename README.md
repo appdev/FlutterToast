@@ -1,6 +1,11 @@
 # Toast
-[![pub package](https://img.shields.io/pub/v/toast.svg)](https://pub.dev/packages/toast)
+
 A Flutter Toast plugin.
+
+
+[![pub package](https://img.shields.io/pub/v/toast.svg)](https://pub.dev/packages/toast)
+
+
 
 ## How to Use
 
