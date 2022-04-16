@@ -11,7 +11,7 @@ A Flutter Toast plugin.
 
 ```yaml
 # add this line to your dependencies
-toast: ^0.2.2
+toast: ^0.2.5
 ```
 
 ```dart
@@ -19,15 +19,18 @@ import 'package:toast/toast.dart';
 ```
 
 ```dart
-Toast.show("Toast plugin app", context, duration: Toast.lengthShort, gravity:  Toast.bottom);
+ToastContext.init(context);
+```
+
+```dart
+Toast.show("Toast plugin app", duration: Toast.lengthShort, gravity:  Toast.bottom);
 ```
 
 property | description
 --------|------------
 msg | String (Not Null)(required)
-context | BuildContext (Not Null)(required)
 duration| Toast.lengthShort or Toast.lengthLong (optional)
-gravity | Toast.top (or) Toast.center (or) Toast.bottom
+gravity | Toast.top (or) Toast.center[not supported on web] (or) Toast.bottom
 textStyle | TextStyle (default fontSize:15, color: Colors.white)
 backgroundColor | Color (default Color(0xAA000000))
 backgroundRadius | double （default 16)

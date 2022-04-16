@@ -6,6 +6,7 @@ void main() => runApp(new MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    ToastContext().init(context);
     return new MaterialApp(
       title: 'Flutter Demo',
       theme: new ThemeData(
@@ -75,6 +76,6 @@ class _MyAppState extends State<MyHomePage> {
   }
 
   void showToast(String msg, {int? duration, int? gravity}) {
-    Toast.show(msg, context, duration: duration, gravity: gravity);
+    Toast.show(msg, duration: duration, gravity: gravity);
   }
 }

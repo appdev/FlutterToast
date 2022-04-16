@@ -1,28 +1,81 @@
+import 'dart:html' as html;
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+class ToastContext {
+  BuildContext? context;
+  MethodChannel? _channel;
+
+  static final ToastContext _instance = ToastContext._internal();
+
+  /// Prmary Constructor for FToast
+  factory ToastContext() {
+    return _instance;
+  }
+
+  /// Take users Context and saves to avariable
+  ToastContext init(BuildContext context) {
+    _instance.context = context;
+    return _instance;
+  }
+
+  ToastContext._internal();
+}
 
 class Toast {
-  static final int lengthShort = 1;
-  static final int lengthLong = 2;
-  static final int bottom = 0;
-  static final int center = 1;
-  static final int top = 2;
-
-  static void show(String msg, BuildContext context,
+  static const int lengthShort = 1;
+  static const int lengthLong = 3;
+  static const int bottom = 0;
+  static const int center = 1;
+  static const int top = 2;
+  static void show(String msg,
       {int? duration = 1,
       int? gravity = 0,
       Color backgroundColor = const Color(0xAA000000),
       textStyle = const TextStyle(fontSize: 15, color: Colors.white),
       double backgroundRadius = 20,
       bool? rootNavigator,
-      Border? border}) {
-    ToastView.dismiss();
-    ToastView.createView(msg, context, duration, gravity, backgroundColor, textStyle,
-        backgroundRadius, border, rootNavigator);
+      Border? border,
+      bool webShowClose = false,
+      Color webTexColor = const Color(0xFFffffff)}) {
+    if (ToastContext().context == null) {
+      throw Exception('Context is null, please call ToastContext.init(context) first');
+    }
+    if (kIsWeb == true) {
+      if (ToastContext()._channel == null) {
+        ToastContext()._channel = const MethodChannel('appdev/FlutterToast');
+      }
+      String toastGravity = "bottom";
+      if (gravity == Toast.top) {
+        toastGravity = "top";
+      } else if (gravity == Toast.center) {
+        toastGravity = "center";
+      } else {
+        toastGravity = "bottom";
+      }
+
+      final Map<String, dynamic> params = <String, dynamic>{
+        'msg': msg,
+        'duration': (duration ?? 1) * 1000,
+        'gravity': toastGravity,
+        'bgcolor': backgroundColor.toString(),
+        'textcolor': webTexColor.value.toRadixString(16),
+        'webShowClose': webShowClose,
+      };
+      debugPrint('Toast Params: $params');
+      ToastContext()._channel?.invokeMethod("showToast", params);
+    } else {
+      ToastView.dismiss();
+      ToastView.createView(msg, ToastContext().context!, duration, gravity, backgroundColor,
+          textStyle, backgroundRadius, border, rootNavigator);
+    }
   }
 }
 
 class ToastView {
-  static final ToastView _singleton = new ToastView._internal();
+  static final ToastView _singleton = ToastView._internal();
 
   factory ToastView() {
     return _singleton;
@@ -46,9 +99,9 @@ class ToastView {
       bool? rootNavigator) async {
     overlayState = Overlay.of(context, rootOverlay: rootNavigator ?? false);
 
-    _overlayEntry = new OverlayEntry(
+    _overlayEntry = OverlayEntry(
       builder: (BuildContext context) => ToastWidget(
-          widget: Container(
+          widget: SizedBox(
             width: MediaQuery.of(context).size.width,
             child: Container(
                 alignment: Alignment.center,
@@ -59,8 +112,8 @@ class ToastView {
                     borderRadius: BorderRadius.circular(backgroundRadius),
                     border: border,
                   ),
-                  margin: EdgeInsets.symmetric(horizontal: 20),
-                  padding: EdgeInsets.fromLTRB(16, 10, 16, 10),
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
                   child: Text(msg, softWrap: true, style: textStyle),
                 )),
           ),
@@ -68,7 +121,7 @@ class ToastView {
     );
     _isVisible = true;
     overlayState!.insert(_overlayEntry!);
-    await new Future.delayed(Duration(seconds: duration == null ? Toast.lengthShort : duration));
+    await Future.delayed(Duration(seconds: duration ?? Toast.lengthShort));
     dismiss();
   }
 
@@ -82,7 +135,7 @@ class ToastView {
 }
 
 class ToastWidget extends StatelessWidget {
-  ToastWidget({
+  const ToastWidget({
     Key? key,
     required this.widget,
     required this.gravity,
@@ -94,7 +147,7 @@ class ToastWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IgnorePointer(
-      child: new Positioned(
+      child: Positioned(
           top: gravity == 2 ? MediaQuery.of(context).viewInsets.top + 50 : null,
           bottom: gravity == 0 ? MediaQuery.of(context).viewInsets.bottom + 50 : null,
           child: Material(
