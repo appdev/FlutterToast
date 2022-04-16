@@ -17,8 +17,8 @@ class Toast {
       bool? rootNavigator,
       Border? border}) {
     ToastView.dismiss();
-    ToastView.createView(msg, context, duration, gravity, backgroundColor,
-        textStyle, backgroundRadius, border, rootNavigator);
+    ToastView.createView(msg, context, duration, gravity, backgroundColor, textStyle,
+        backgroundRadius, border, rootNavigator);
   }
 }
 
@@ -45,7 +45,7 @@ class ToastView {
       double backgroundRadius,
       Border? border,
       bool? rootNavigator) async {
-    overlayState = Overlay.of(context, rootOverlay: rootNavigator??false);
+    overlayState = Overlay.of(context, rootOverlay: rootNavigator ?? false);
 
     _overlayEntry = new OverlayEntry(
       builder: (BuildContext context) => ToastWidget(
@@ -69,8 +69,7 @@ class ToastView {
     );
     _isVisible = true;
     overlayState!.insert(_overlayEntry!);
-    await new Future.delayed(
-        Duration(seconds: duration == null ? Toast.lengthShort : duration));
+    await new Future.delayed(Duration(seconds: duration == null ? Toast.lengthShort : duration));
     dismiss();
   }
 
@@ -95,12 +94,14 @@ class ToastWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Positioned(
-        top: gravity == 2 ? MediaQuery.of(context).viewInsets.top + 50 : null,
-        bottom: gravity == 0 ? MediaQuery.of(context).viewInsets.bottom + 50 : null,
-        child: Material(
-          color: Colors.transparent,
-          child: widget,
-        ));
+    return IgnorePointer(
+      child: new Positioned(
+          top: gravity == 2 ? MediaQuery.of(context).viewInsets.top + 50 : null,
+          bottom: gravity == 0 ? MediaQuery.of(context).viewInsets.bottom + 50 : null,
+          child: Material(
+            color: Colors.transparent,
+            child: widget,
+          )),
+    );
   }
 }
