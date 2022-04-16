@@ -64,7 +64,6 @@ class Toast {
         'textcolor': webTexColor.value.toRadixString(16),
         'webShowClose': webShowClose,
       };
-      debugPrint('Toast Params: $params');
       ToastContext()._channel?.invokeMethod("showToast", params);
     } else {
       ToastView.dismiss();
