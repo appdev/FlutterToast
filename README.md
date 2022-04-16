@@ -1,4 +1,5 @@
 # Toast
+[![pub package](https://img.shields.io/pub/v/flutter_icons.svg)](https://pub.dev/packages/toast)
 
 A Flutter Toast plugin.
 
