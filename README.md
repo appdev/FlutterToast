@@ -11,7 +11,7 @@ A Flutter Toast plugin.
 
 ```yaml
 # add this line to your dependencies
-toast: ^0.1.4
+toast: ^0.2.2
 ```
 
 ```dart
