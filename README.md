@@ -26,8 +26,8 @@ property | description
 --------|------------
 msg | String (Not Null)(required)
 context | BuildContext (Not Null)(required)
-duration| Toast.LENGTH_SHORT or Toast.LENGTH_LONG (optional)
-gravity | Toast.TOP (or) Toast.CENTER (or) Toast.BOTTOM
+duration| Toast.lengthShort or Toast.lengthLong (optional)
+gravity | Toast.top (or) Toast.center (or) Toast.bottom
 textStyle | TextStyle (default fontSize:15, color: Colors.white)
 backgroundColor | Color (default Color(0xAA000000))
 backgroundRadius | double （default 16)
