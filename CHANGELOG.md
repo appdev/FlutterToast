@@ -1,3 +1,9 @@
+## 0.2.5
+
+add null check
+add web support
+
+
 ## 0.1.5
 
 * Add border customization
