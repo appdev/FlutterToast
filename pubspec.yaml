@@ -1,6 +1,6 @@
 name: toast
 description: A Flutter Toast plugin.
-version: 0.2.7
+version: 0.2.8
 authors:
   - huclengyue <lengyue@apkdv.com>
 homepage: https://github.com/huclengyue/FlutterToast
