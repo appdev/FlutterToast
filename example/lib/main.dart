@@ -6,7 +6,6 @@ void main() => runApp(new MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ToastContext().init(context);
     return new MaterialApp(
       title: 'Flutter Demo',
       theme: new ThemeData(
@@ -26,6 +25,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyHomePage> {
+
+  @override
+  void initState() {
+    super.initState();
+    ToastContext().init(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
