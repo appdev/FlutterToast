@@ -19,7 +19,7 @@ import 'package:toast/toast.dart';
 ```
 
 ```dart
-ToastContext.init(context);
+ToastContext().init(context);
 ```
 
 ```dart
