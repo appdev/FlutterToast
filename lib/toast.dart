@@ -33,13 +33,16 @@ class Toast {
       int? gravity = 0,
       Color backgroundColor = const Color(0xAA000000),
       textStyle = const TextStyle(fontSize: 15, color: Colors.white),
+      TextDirection? textDirection,
+      TextAlign? textAlign,
       double backgroundRadius = 20,
       bool? rootNavigator,
       Border? border,
       bool webShowClose = false,
       Color webTexColor = const Color(0xFFffffff)}) {
     if (ToastContext().context == null) {
-      throw Exception('Context is null, please call ToastContext.init(context) first');
+      throw Exception(
+          'Context is null, please call ToastContext.init(context) first');
     }
     if (kIsWeb == true) {
       if (ToastContext()._channel == null) {
@@ -65,8 +68,18 @@ class Toast {
       ToastContext()._channel?.invokeMethod("showToast", params);
     } else {
       ToastView.dismiss();
-      ToastView.createView(msg, ToastContext().context!, duration, gravity, backgroundColor,
-          textStyle, backgroundRadius, border, rootNavigator);
+      ToastView.createView(
+          msg,
+          ToastContext().context!,
+          duration,
+          gravity,
+          backgroundColor,
+          textStyle,
+          textDirection,
+          textAlign,
+          backgroundRadius,
+          border,
+          rootNavigator);
     }
   }
 }
@@ -91,6 +104,8 @@ class ToastView {
       int? gravity,
       Color background,
       TextStyle textStyle,
+      TextDirection? textDirection,
+      TextAlign? textAlign,
       double backgroundRadius,
       Border? border,
       bool? rootNavigator) async {
@@ -111,7 +126,11 @@ class ToastView {
                   ),
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                   padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
-                  child: Text(msg, softWrap: true, style: textStyle),
+                  child: Text(msg,
+                      softWrap: true,
+                      style: textStyle,
+                      textAlign: textAlign,
+                      textDirection: textDirection),
                 )),
           ),
           gravity: gravity),
@@ -145,7 +164,8 @@ class ToastWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned(
         top: gravity == 2 ? MediaQuery.of(context).viewInsets.top + 50 : null,
-        bottom: gravity == 0 ? MediaQuery.of(context).viewInsets.bottom + 50 : null,
+        bottom:
+            gravity == 0 ? MediaQuery.of(context).viewInsets.bottom + 50 : null,
         child: IgnorePointer(
           child: Material(
             color: Colors.transparent,
